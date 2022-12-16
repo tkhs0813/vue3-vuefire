@@ -1,0 +1,20 @@
+<script lang="ts" setup>
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const routes = computed(() =>
+  router
+    .getRoutes()
+    .filter((route) => !route.path.includes(":") && !route.children.length)
+);
+</script>
+
+<template>
+  <ul>
+    <li v-for="route in routes" :key="route.path">
+      <RouterLink :to="{ name: route.name }" v-slot="{ href }">{{
+        href
+      }}</RouterLink>
+    </li>
+  </ul>
+</template>
